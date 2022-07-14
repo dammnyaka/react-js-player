@@ -1,0 +1,34 @@
+{
+  "list": [
+    {
+      "title": "Stop Staring At The Shadow",
+      "artist": "$uicideboy$", 
+      "img_src": "uicideboy-StopStaringAtTheShadows",
+      "src": "That Just Isn't Empirically Possible"
+    },{
+      "title": "Beware Of Dog",
+      "artist": "Bones", 
+      "img_src": "Bones - offline",
+      "src": "Bones - BewareOfDog"
+    },{
+      "title": "Champagne In The Graveyard",
+      "artist": "Bones", 
+      "img_src": "Bones - offline",
+      "src": "Bones - ChampagneInTheGraveyard"
+    },{
+      "title": "Not so Perfect",
+      "artist": "Coldsteeze", 
+      "img_src": "Coldsteeze - Not so Perfect",
+      "src": "Coldsteeze-Not-so-Perfect"
+    }
+  ],
+  "icon": [{
+    "play": "play",
+    "pause": "pause",
+    "forward": "forward",
+    "backward": "backward",
+    "crotchet": "crotchet"
+  }]
+
+}
+

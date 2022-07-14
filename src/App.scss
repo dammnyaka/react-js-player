@@ -1,0 +1,21 @@
+.App {
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(135deg, white, lightgreen, darkblue);
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // align-items: center;
+  position: absolute;
+  top: calc(50% - 350px);
+  margin: 0 auto;
+  max-width: 1000px;
+  height: 700px;
+  left: 0;
+  right: 0;
+  background-color: rgba(83, 83, 83, 0.507);
+
+}
