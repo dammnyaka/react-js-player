@@ -4,7 +4,12 @@ import './Container.scss'
 const Container = () => {
   return (
     <div className='container'>
-      
+      <div>
+        <div>img</div>
+        <div>playlist</div>
+      </div>
+      <div>artist</div>
+      <div>title</div>
     </div>
   )
 }
