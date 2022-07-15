@@ -7,17 +7,13 @@ import Container from './Player/Container.jsx'
 
 
 function App() {
-  //state
-  // const [isPlay, setIsPlay] = useState(false);
-  // const [currentSong, setCurrentSong] = useState(db.list[0])
-
-
+  const [currentSong, setCurrentSong] = useState(db.list[0])
 
   return (
     <div className="App">
       <div  className="player">
-        <Container db={db}/>
-        <Media db={db}/>
+        <Container db={db} currentSong={currentSong} setCurrentSong={setCurrentSong}/>
+        <Media db={db} currentSong={currentSong} setCurrentSong={setCurrentSong}/>
       </div>
     </div>
   );

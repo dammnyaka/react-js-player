@@ -5,7 +5,7 @@ import './Media.scss'
 
 
 
-const Media = ({db}) => {
+const Media = ({ db, currentSong }) => {
 
   const [itPlay, setItPlay] = useState(false);
   const [duration, setDuration] = useState(0);
@@ -19,7 +19,6 @@ const Media = ({db}) => {
     const sec = Math.floor(audioPlayer.current.duration);
     setDuration(sec);
     timelineBar.current.max = sec;
-    
   },[audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState])
 
   const calculateTime = (sec) => {
@@ -31,7 +30,6 @@ const Media = ({db}) => {
   }
 
   const togglePlayPause = () => {
-    // const prevValue = itPlay
     setItPlay(!itPlay)
     if(!itPlay) {
       audioPlayer.current.play();
@@ -62,26 +60,29 @@ const Media = ({db}) => {
     timelineBar.current.value = Number(timelineBar.current.value) - 10;
     changeTimeline()
   }
-  const [asd,setAsd] = useState([db])
+
   const forwardTime = () => {
     timelineBar.current.value = Number(timelineBar.current.value) + 10;
     changeTimeline()
   }
 
-// console.log(audioPlayer.current);
+  const changeVolume = (e) => {
+    audioPlayer.current.volume = e.target.value / 100
+  }
+
   return (
     <div className='media'>
-      <audio  ref={audioPlayer} src={require(`../music/${db.list[0].src}.mp3`)}></audio>
+      <audio onLoadedMetadata={e=> setDuration(e.target.value)} autoPlay={currentSong} ref={audioPlayer} src={require(`../music/${currentSong.src}.mp3`)}></audio>
       <div className='media_main'>
         <div>{calculateTime(currentTime)}</div>
         <img onClick={backwardTime} src={require(`../icon/${db.icon[0].backward}.png`)} alt="backward" />
-        <img onClick={togglePlayPause} 
+        <img onClick={togglePlayPause}
           src={itPlay ? require(`../icon/${db.icon[0].pause}.png`) : 
             require(`../icon/${db.icon[0].play}.png`)}
           alt="play" />
         <img onClick={forwardTime} src={require(`../icon/${db.icon[0].forward}.png`)} alt="forward" />
         <div>
-          <input type="range" />
+          <input onChange={changeVolume} defaultValue='50' type="range" />
         </div>
         <div>{duration ? calculateTime(duration) : '00:00'}</div>
       </div>
