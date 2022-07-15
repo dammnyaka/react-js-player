@@ -16,7 +16,7 @@ function App() {
   return (
     <div className="App">
       <div  className="player">
-        <Container/>
+        <Container db={db}/>
         <Media db={db}/>
       </div>
     </div>
