@@ -8,8 +8,8 @@ import './Media.scss'
 const Media = ({db}) => {
 
   const [itPlay, setItPlay] = useState(false);
-  const [duration, setDuration] = useState(0)
-  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
 
   const audioPlayer = useRef();
   const timelineBar = useRef();
@@ -62,16 +62,16 @@ const Media = ({db}) => {
     timelineBar.current.value = Number(timelineBar.current.value) - 10;
     changeTimeline()
   }
-
+  const [asd,setAsd] = useState([db])
   const forwardTime = () => {
     timelineBar.current.value = Number(timelineBar.current.value) + 10;
     changeTimeline()
   }
 
-console.log(timelineBar.current);
+// console.log(audioPlayer.current);
   return (
     <div className='media'>
-      <audio  ref={audioPlayer} src={require(`../music/${db.list[3].src}.mp3`)}></audio>
+      <audio  ref={audioPlayer} src={require(`../music/${db.list[0].src}.mp3`)}></audio>
       <div className='media_main'>
         <div>{calculateTime(currentTime)}</div>
         <img onClick={backwardTime} src={require(`../icon/${db.icon[0].backward}.png`)} alt="backward" />
@@ -86,7 +86,7 @@ console.log(timelineBar.current);
         <div>{duration ? calculateTime(duration) : '00:00'}</div>
       </div>
       <div className='media_timeline'>
-        <input className='timelineBar' step='0.016' defaultValue='0' type="range" ref={timelineBar} onChange={changeTimeline}/>
+        <input className='timelineBar' step='0.1' defaultValue='0' type="range" ref={timelineBar} onChange={changeTimeline}/>
       </div>
     </div>
   )

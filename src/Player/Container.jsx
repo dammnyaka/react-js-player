@@ -1,15 +1,23 @@
 import React from 'react'
 import './Container.scss'
 
-const Container = () => {
+const Container = ({ db}) => {
+
+
+
+
   return (
     <div className='container'>
-      <div>
-        <div>img</div>
-        <div>playlist</div>
+      <div className='content'>
+        <div className='content_img'>
+          <img src={require(`../img/${db.list[0].img_src}.jpg`)} alt=""/>
+          <div className='content_playlist'>playlist</div>
+        </div>
+        <div className='content_info'>
+          <div className='content_artist'>artist</div>
+          <div className='content_title'>title</div>
+        </div>
       </div>
-      <div>artist</div>
-      <div>title</div>
     </div>
   )
 }
