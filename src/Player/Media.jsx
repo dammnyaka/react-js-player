@@ -54,8 +54,6 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
   }
 
   const backwardTime = () => {
-    // timelineBar.current.value = Number(timelineBar.current.value) - 10;
-    // changeTimeline()
     const index = db.list.findIndex(x=> x.title === currentSong.title);
     if(index === 0) {
       setCurrentSong(db.list[db.list.length - 1]);
@@ -68,8 +66,6 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
   }
 
   const forwardTime = () => {
-    // timelineBar.current.value = Number(timelineBar.current.value) + 10;
-    // changeTimeline()
     const index = db.list.findIndex(x=> x.title === currentSong.title);
     if(index === db.list.length - 1) {
       setCurrentSong(db.list[0]);
@@ -85,9 +81,14 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
     audioPlayer.current.volume = e.target.value / 100
   }
 
+  const autoPlaylist = (i) =>{
+    animationRef.current = requestAnimationFrame(itPlayback);
+    return i
+  }
+
   return (
     <div className='media'>
-      <audio onLoadedMetadata={e=> setDuration(e.target.value)} autoPlay={currentSong} ref={audioPlayer} src={require(`../music/${currentSong.src}.mp3`)}></audio>
+      <audio onLoadedMetadata={e=> setDuration(e.target.value)} onEnded={forwardTime} autoPlay={itPlay && autoPlaylist(currentSong)} ref={audioPlayer} src={require(`../music/${currentSong.src}.mp3`)}></audio>
       <div className='media_main'>
         <div>{calculateTime(currentTime)}</div>
         <img onClick={backwardTime} src={require(`../icon/${db.icon[0].backward}.png`)} alt="backward" />

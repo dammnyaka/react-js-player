@@ -21,7 +21,6 @@ const Container = ({ db, currentSong, setCurrentSong }) => {
     }
   }
 
-
   return (
     <div className='container'>
       <div className='content'>
