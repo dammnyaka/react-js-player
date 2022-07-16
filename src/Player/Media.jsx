@@ -2,8 +2,6 @@ import { useRef, useState,useEffect } from 'react'
 import './Media.scss'
 
 
-
-
 const Media = ({ db, currentSong, setCurrentSong }) => {
 
   const [itPlay, setItPlay] = useState(false);
@@ -24,12 +22,12 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
     const min = Math.floor(sec / 60);
     const returnMin = min < 10 ? `0${min}` : `${min}`;
     const second = Math.floor(sec % 60);
-    const returnSec = second < 10 ? `0${second}` : `${second}`
-    return `${returnMin}:${returnSec}`
+    const returnSec = second < 10 ? `0${second}` : `${second}`;
+    return `${returnMin}:${returnSec}`;
   }
 
   const togglePlayPause = () => {
-    setItPlay(!itPlay)
+    setItPlay(!itPlay);
     if(!itPlay) {
       audioPlayer.current.play();
       animationRef.current = requestAnimationFrame(itPlayback);
@@ -76,7 +74,7 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
     if(index === db.list.length - 1) {
       setCurrentSong(db.list[0]);
     } else {
-      setCurrentSong(db.list[index + 1])
+      setCurrentSong(db.list[index + 1]);
     }
     if(!itPlay) {
       togglePlayPause();
@@ -98,7 +96,7 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
           alt="play" />
         <img onClick={forwardTime} src={require(`../icon/${db.icon[0].forward}.png`)} alt="forward" />
         <div>
-          <input onChange={changeVolume} defaultValue='50' type="range" />
+          <input onChange={changeVolume} defaultValue='100' type="range" />
         </div>
         <div>{duration ? calculateTime(duration) : '00:00'}</div>
       </div>

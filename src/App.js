@@ -7,7 +7,8 @@ import Container from './Player/Container.jsx'
 
 
 function App() {
-  const [currentSong, setCurrentSong] = useState(db.list[0])
+  
+  const [currentSong, setCurrentSong] = useState(db.list[0]);
 
   return (
     <div className="App">

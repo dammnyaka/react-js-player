@@ -3,21 +3,21 @@ import { useState } from 'react';
 import './Container.scss'
 
 const Container = ({ db, currentSong, setCurrentSong }) => {
-  const [itPlaylist, itSetPlaylist] = useState(false)
-
-  const [sort, setSort] = useState("asc")
-  const [ , setAsd] = useState(db)
+  
+  const [itPlaylist, itSetPlaylist] = useState(false);
+  const [sort, setSort] = useState("asc");
+  const [ , setAsd] = useState(db);
 
   const sorting = (obj) => {
     if(sort === "asc") {
-      const res = db.list.sort((a,b) => a[obj].localeCompare(b[obj]))
-      setAsd(res)
-      setSort("desc")
+      const res = db.list.sort((a,b) => a[obj].localeCompare(b[obj]));
+      setAsd(res);
+      setSort("desc");
     }
     if(sort === "desc") {
-      const res = db.list.sort((a,b) => b[obj].localeCompare(a[obj]))
-      setAsd(res)
-      setSort("asc")
+      const res = db.list.sort((a,b) => b[obj].localeCompare(a[obj]));
+      setAsd(res);
+      setSort("asc");
     }
   }
 
