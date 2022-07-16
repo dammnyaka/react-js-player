@@ -1,16 +1,15 @@
-// import React from 'react'
 import { useRef, useState,useEffect } from 'react'
 import './Media.scss'
 
 
 
 
-const Media = ({ db, currentSong }) => {
+const Media = ({ db, currentSong, setCurrentSong }) => {
 
   const [itPlay, setItPlay] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-
+  
   const audioPlayer = useRef();
   const timelineBar = useRef();
   const animationRef = useRef();
@@ -57,13 +56,31 @@ const Media = ({ db, currentSong }) => {
   }
 
   const backwardTime = () => {
-    timelineBar.current.value = Number(timelineBar.current.value) - 10;
-    changeTimeline()
+    // timelineBar.current.value = Number(timelineBar.current.value) - 10;
+    // changeTimeline()
+    const index = db.list.findIndex(x=> x.title === currentSong.title);
+    if(index === 0) {
+      setCurrentSong(db.list[db.list.length - 1]);
+    } else {
+      setCurrentSong(db.list[index - 1]);
+    }
+    if(!itPlay) {
+      togglePlayPause();
+    }
   }
 
   const forwardTime = () => {
-    timelineBar.current.value = Number(timelineBar.current.value) + 10;
-    changeTimeline()
+    // timelineBar.current.value = Number(timelineBar.current.value) + 10;
+    // changeTimeline()
+    const index = db.list.findIndex(x=> x.title === currentSong.title);
+    if(index === db.list.length - 1) {
+      setCurrentSong(db.list[0]);
+    } else {
+      setCurrentSong(db.list[index + 1])
+    }
+    if(!itPlay) {
+      togglePlayPause();
+    }
   }
 
   const changeVolume = (e) => {
@@ -77,8 +94,7 @@ const Media = ({ db, currentSong }) => {
         <div>{calculateTime(currentTime)}</div>
         <img onClick={backwardTime} src={require(`../icon/${db.icon[0].backward}.png`)} alt="backward" />
         <img onClick={togglePlayPause}
-          src={itPlay ? require(`../icon/${db.icon[0].pause}.png`) : 
-            require(`../icon/${db.icon[0].play}.png`)}
+          src={require(`../icon/${itPlay ? db.icon[0].pause : db.icon[0].play}.png`)}
           alt="play" />
         <img onClick={forwardTime} src={require(`../icon/${db.icon[0].forward}.png`)} alt="forward" />
         <div>
@@ -93,4 +109,4 @@ const Media = ({ db, currentSong }) => {
   )
 }
 
-export default Media
+export default Media;

@@ -8,7 +8,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // align-items: center;
   position: absolute;
   top: calc(50% - 350px);
   margin: 0 auto;
@@ -26,8 +25,19 @@
     top: calc(50% - 250px);
     height: 500px;
     font-size: 13px;
+    margin: 5px;
+
+    .img_cont{
+      width: 40%;
+    }
+    .content_playlist{
+      right: 10px;
+    }
+    .playlist {
+      padding: 6px;
+    }
     .playlist_active {
-      top: 220px;
+      top: 190px;
       width: 270px;
       height: 120px;
       // overflow: hidden;
@@ -36,6 +46,7 @@
       font-size: 30px;
     }
     .media_main {
+
       img{
         width: 25px;
         height: 25px;

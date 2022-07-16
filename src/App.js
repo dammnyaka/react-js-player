@@ -1,5 +1,5 @@
 import "./App.scss"
-import {useState} from 'react'
+import { useState } from 'react'
 import db from './db.json'
 import Media from './Player/Media.jsx';
 import Container from './Player/Container.jsx'
