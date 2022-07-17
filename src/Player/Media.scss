@@ -46,6 +46,7 @@
 
   &_timeline {
    display: flex;
+   flex-direction: column;
 
    input[type=range] {
     width: 100%;
@@ -58,4 +59,27 @@
 
 .timelineBar {
   --width: 0;
+}
+.timelineBar_none {
+  display: none;
+}
+
+
+.waveform {
+  // width: 100%;
+  // height: 40px;
+  // cursor: pointer;
+  margin: 0 5px 10px;
+}
+.waveform_none {
+  display: none;
+}
+
+.waveform_img{
+  position: fixed;
+  
+  width: 30px;
+  height: 30px;
+  -webkit-user-drag: none;
+      user-select: none;
 }

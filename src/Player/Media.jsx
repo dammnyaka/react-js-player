@@ -1,5 +1,6 @@
 import { useRef, useState,useEffect } from 'react'
 import './Media.scss'
+import WaveSurfer from 'wavesurfer.js';
 
 
 const Media = ({ db, currentSong, setCurrentSong }) => {
@@ -7,10 +8,35 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
   const [itPlay, setItPlay] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  
+  const [wavePlay, setWavePlay] = useState({Playing: false, Pos: 0})
+  const [waveState, setWaveState] = useState(null)
+
   const audioPlayer = useRef();
   const timelineBar = useRef();
   const animationRef = useRef();
+  const waveformRef = useRef();
+
+  useEffect(()=> {
+    if(waveformRef.current) {
+      const wavesurfer = WaveSurfer.create({
+        container: waveformRef.current,
+        scrollParent: false,
+        barWidth: 3,
+        cursorWidth: 1,
+        backend: 'WebAudio',
+        hideScrollbar: false,
+        height: 40,
+        progressColor: '#24b89a',
+        responsive: 10,
+        waveColor: "rgb(0,0,0,0.25)",
+        cursorColor: 'transparent',
+      });
+        wavesurfer.load(audioPlayer.current);
+        wavesurfer.setMute(true)
+        setWaveState(wavesurfer)
+        return () => wavesurfer.destroy();
+    }
+  },[currentSong])
 
   useEffect(()=> {
     const sec = Math.floor(audioPlayer.current.duration);
@@ -31,12 +57,13 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
     if(!itPlay) {
       audioPlayer.current.play();
       animationRef.current = requestAnimationFrame(itPlayback);
+      waveState?.play();
     } else {
       audioPlayer.current.pause();
       cancelAnimationFrame(animationRef.current);
+      waveState?.pause();
     }
   }
-
   const itPlayback = () => {
     timelineBar.current.value = audioPlayer.current.currentTime;
     animationRef.current = requestAnimationFrame(itPlayback);
@@ -45,6 +72,8 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
 
   const changeTimeline = () => {
     audioPlayer.current.currentTime = timelineBar.current.value;
+    const syncWaveTime = timelineBar.current.value / duration * 100 /100
+    waveState?.seekTo(syncWaveTime)
     changePlayTime();
   }
 
@@ -83,6 +112,9 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
 
   const autoPlaylist = (i) =>{
     animationRef.current = requestAnimationFrame(itPlayback);
+    if(!wavePlay.Playing) {
+      waveState?.play();
+    }
     return i
   }
 
@@ -92,17 +124,21 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
       <div className='media_main'>
         <div>{calculateTime(currentTime)}</div>
         <img onClick={backwardTime} src={require(`../icon/${db.icon[0].backward}.png`)} alt="backward" />
-        <img onClick={togglePlayPause}
+        <img onClick={togglePlayPause} onKeyDown={togglePlayPause}
           src={require(`../icon/${itPlay ? db.icon[0].pause : db.icon[0].play}.png`)}
           alt="play" />
         <img onClick={forwardTime} src={require(`../icon/${db.icon[0].forward}.png`)} alt="forward" />
         <div>
           <input onChange={changeVolume} defaultValue='100' type="range" />
         </div>
-        <div>{duration ? calculateTime(duration) : '00:00'}</div>
+        <div>
+          <div>{duration ? calculateTime(duration) : '00:00'}</div>
+          <img onClick={()=> setWavePlay(!wavePlay)} className='waveform_img' src={require(`../icon/${db.icon[0].waveform}.png`)} alt="waveform" />
+        </div>
       </div>
       <div className='media_timeline'>
-        <input className='timelineBar' step='0.1' defaultValue='0' type="range" ref={timelineBar} onChange={changeTimeline}/>
+        <input className={wavePlay ? 'timelineBar_none' : 'timelineBar'} step='0.1' defaultValue='0' type="range" ref={timelineBar} onChange={changeTimeline}/>
+        <div className={wavePlay ? 'waveform' : 'waveform_none'} ref={waveformRef}/>
       </div>
     </div>
   )

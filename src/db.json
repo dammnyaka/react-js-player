@@ -37,7 +37,8 @@
     "pause": "pause",
     "forward": "forward",
     "backward": "backward",
-    "crotchet": "crotchet"
+    "crotchet": "crotchet",
+    "waveform": "waveform"
   }]
 
 }
