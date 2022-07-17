@@ -23,7 +23,8 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
         scrollParent: false,
         barWidth: 3,
         cursorWidth: 1,
-        backend: 'WebAudio',
+        backend: 'MediaElement',
+        mediaType: 'audio',
         hideScrollbar: false,
         height: 40,
         progressColor: '#24b89a',
@@ -32,7 +33,6 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
         cursorColor: 'transparent',
       });
         wavesurfer.load(audioPlayer.current);
-        wavesurfer.setMute(true)
         setWaveState(wavesurfer)
         return () => wavesurfer.destroy();
     }
@@ -55,11 +55,11 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
   const togglePlayPause = () => {
     setItPlay(!itPlay);
     if(!itPlay) {
-      audioPlayer.current.play();
+      // audioPlayer.current.play();
       animationRef.current = requestAnimationFrame(itPlayback);
       waveState?.play();
     } else {
-      audioPlayer.current.pause();
+      // audioPlayer.current.pause();
       cancelAnimationFrame(animationRef.current);
       waveState?.pause();
     }
@@ -72,8 +72,8 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
 
   const changeTimeline = () => {
     audioPlayer.current.currentTime = timelineBar.current.value;
-    const syncWaveTime = timelineBar.current.value / duration * 100 /100
-    waveState?.seekTo(syncWaveTime)
+    // const syncWaveTime = timelineBar.current.value / duration * 100 /100
+    // waveState?.seekTo(syncWaveTime)
     changePlayTime();
   }
 
@@ -112,9 +112,9 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
 
   const autoPlaylist = (i) =>{
     animationRef.current = requestAnimationFrame(itPlayback);
-    if(!wavePlay.Playing) {
+    // if(!wavePlay.Playing) {
       waveState?.play();
-    }
+    // }
     return i
   }
 
