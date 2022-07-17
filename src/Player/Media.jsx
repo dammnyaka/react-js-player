@@ -72,8 +72,6 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
 
   const changeTimeline = () => {
     audioPlayer.current.currentTime = timelineBar.current.value;
-    // const syncWaveTime = timelineBar.current.value / duration * 100 /100
-    // waveState?.seekTo(syncWaveTime)
     changePlayTime();
   }
 
