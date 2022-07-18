@@ -110,6 +110,7 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
   }
 
   const autoPlaylist = (i) =>{
+    waveState?.drawBuffer();
     animationRef.current = requestAnimationFrame(itPlayback);
     waveState?.setVolume(volume)
     waveState?.play();
@@ -132,7 +133,7 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
         </div>
         <div>
           <div>{duration ? calculateTime(duration) : '00:00'}</div>
-          <img onClick={()=>setWavePlay(!wavePlay)} className='waveform_img' src={require(`../icon/${db.icon[0].waveform}.png`)} alt="waveform" />
+          <img onClick={()=> setWavePlay(!wavePlay)} className='waveform_img' src={require(`../icon/${db.icon[0].waveform}.png`)} alt="waveform" />
         </div>
       </div>
       <div className='media_timeline'>
