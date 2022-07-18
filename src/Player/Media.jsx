@@ -112,7 +112,7 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
   const autoPlaylist = (i) =>{
     waveState?.drawBuffer();
     animationRef.current = requestAnimationFrame(itPlayback);
-    waveState?.setVolume(volume)
+    waveState?.setVolume(volume);
     waveState?.play();
     return i
   }
