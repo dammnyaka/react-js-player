@@ -8,8 +8,9 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
   const [itPlay, setItPlay] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [wavePlay, setWavePlay] = useState({Playing: false, Pos: 0})
+  const [wavePlay, setWavePlay] = useState(false)
   const [waveState, setWaveState] = useState(null)
+  const [volume,setVolume] = useState(1)
 
   const audioPlayer = useRef();
   const timelineBar = useRef();
@@ -20,7 +21,6 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
     if(waveformRef.current) {
       const wavesurfer = WaveSurfer.create({
         container: waveformRef.current,
-        scrollParent: false,
         barWidth: 3,
         cursorWidth: 1,
         backend: 'MediaElement',
@@ -28,7 +28,7 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
         hideScrollbar: false,
         height: 40,
         progressColor: '#24b89a',
-        responsive: 10,
+        responsive: true,
         waveColor: "rgb(0,0,0,0.25)",
         cursorColor: 'transparent',
       });
@@ -106,15 +106,16 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
 
   const changeVolume = (e) => {
     audioPlayer.current.volume = e.target.value / 100
+    setVolume(e.target.value/100)
   }
 
   const autoPlaylist = (i) =>{
     animationRef.current = requestAnimationFrame(itPlayback);
-    // if(!wavePlay.Playing) {
-      waveState?.play();
-    // }
+    waveState?.setVolume(volume)
+    waveState?.play();
     return i
   }
+
 
   return (
     <div className='media'>
@@ -131,12 +132,12 @@ const Media = ({ db, currentSong, setCurrentSong }) => {
         </div>
         <div>
           <div>{duration ? calculateTime(duration) : '00:00'}</div>
-          <img onClick={()=> setWavePlay(!wavePlay)} className='waveform_img' src={require(`../icon/${db.icon[0].waveform}.png`)} alt="waveform" />
+          <img onClick={()=>setWavePlay(!wavePlay)} className='waveform_img' src={require(`../icon/${db.icon[0].waveform}.png`)} alt="waveform" />
         </div>
       </div>
       <div className='media_timeline'>
-        <input className={wavePlay ? 'timelineBar_none' : 'timelineBar'} step='0.1' defaultValue='0' type="range" ref={timelineBar} onChange={changeTimeline}/>
-        <div className={wavePlay ? 'waveform' : 'waveform_none'} ref={waveformRef}/>
+        <input className={!wavePlay ? 'timelineBar_none' : 'timelineBar'} step='0.1' defaultValue='0' type="range" ref={timelineBar} onChange={changeTimeline}/>
+        <div className={!wavePlay ? 'waveform' : 'waveform_none'} ref={waveformRef}/>
       </div>
     </div>
   )
